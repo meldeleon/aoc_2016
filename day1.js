@@ -1,5 +1,3 @@
-const { match } = require("assert")
-
 const input = require("fs")
   .readFileSync("day1_input.txt")
   .toString()
@@ -12,6 +10,12 @@ let marker = {
 }
 
 let cardinals = ["N", "E", "S", "W"]
+
+input.forEach((instruction) => {
+  let direction = instruction[0]
+  let distance = parseInt(instruction.substring(1))
+  moveMarker(marker, direction, distance)
+})
 
 function moveMarker(marker, direction, distance) {
   let currentIndex = cardinals.indexOf(marker.facing)
@@ -42,12 +46,6 @@ function moveMarker(marker, direction, distance) {
   }
   console.log(distanceTraveled([0, 0], marker.position))
 }
-
-input.forEach((instruction) => {
-  let direction = instruction[0]
-  let distance = parseInt(instruction.substring(1))
-  moveMarker(marker, direction, distance)
-})
 
 function distanceTraveled(coords1, coords2) {
   let [x1, y1] = [coords1[0], coords1[1]]
