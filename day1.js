@@ -44,7 +44,8 @@ function moveMarker(marker, direction, distance) {
     default:
       console.log("no cases met")
   }
-  console.log(distanceTraveled([0, 0], marker.position))
+
+  console.log(distanceTraveled([0, 0], marker.position), marker.position)
 }
 
 function distanceTraveled(coords1, coords2) {
