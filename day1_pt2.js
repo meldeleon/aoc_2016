@@ -1,6 +1,3 @@
-const { constants } = require("buffer")
-const { stringify } = require("querystring")
-
 const input = require("fs")
   .readFileSync("day1_input.txt")
   .toString()
