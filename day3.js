@@ -1,0 +1,5 @@
+const input = require("fs")
+  .readFileSync("day2_input.txt")
+  .toString()
+  .split(/\r?\n/)
+console.log(input)
