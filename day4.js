@@ -1,10 +1,8 @@
-const { count } = require("console")
-
 const input = require("fs")
   .readFileSync("day4_input.txt")
   .toString()
   .split(/\r?\n?\s+/)
-console.log(input)
+//console.log(input)
 const alphabet = [
   "a",
   "b",
