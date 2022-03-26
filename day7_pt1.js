@@ -3,11 +3,11 @@ const input = require("fs")
   .toString()
   .split(/\r?\n?\s+/)
 
-let count = 0
 let passedCases = []
 input.forEach((str) => {
   let captureGroups = str.split(/(\[.*?\])/g)
   let abbaInBrackets = false
+  let stringPassedTest = false
   captureGroups.forEach((group) => {
     //console.log(group)
     if (group.startsWith("[")) {
@@ -19,10 +19,12 @@ input.forEach((str) => {
   })
   captureGroups.forEach((group) => {
     if (!group.startsWith("[") && findAbba(group) && !abbaInBrackets) {
-      passedCases.push(str)
-      count++
+      stringPassedTest = true
     }
   })
+  if (stringPassedTest) {
+    passedCases.push(str)
+  }
 })
 
 function findAbba(str) {
@@ -41,6 +43,4 @@ function findAbba(str) {
     }
   }
 }
-
-console.log(count)
-console.log(passedCases)
+console.log(passedCases.length)
