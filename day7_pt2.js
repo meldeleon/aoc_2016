@@ -11,27 +11,43 @@ input.forEach((str) => {
   let bab = []
   let stringPassedTest = false
   captureGroups.forEach((group) => {
+    //console.log(group)
+    let patterns = findPattern(group)
     if (group.startsWith("[")) {
-      bab = findPattern(group)
+      bab.push(patterns)
+    } else {
+      aba.push(findPattern(group))
     }
   })
-  captureGroups.forEach((group) => {
-    if (!group.startsWith("[")) {
-      aba = findPattern(group)
-      if (aba) {
-        for (let i = 0; i < aba.length; i++) {
-          for (j = 0; j < bab.length; j++) {
-            if (checkInverse(aba[i], bab[j])) {
-              console.log(`inverse strings found: ${aba[i]} ${bab[j]}`)
-              stringPassedTest = true
-            }
-          }
-        }
+  let abaFlat = aba.flat()
+  let babFlat = bab.flat()
+  for (let i = 0; i < abaFlat.length; i++) {
+    for (let j = 0; j < babFlat.length; j++) {
+      //console.log(`comparing ${abaFlat[i]} and ${babFlat[j]}`)
+      if (checkInverse(abaFlat[i], babFlat[j])) {
+        console.log(
+          `inverse strings found: ${abaFlat[i]} ${babFlat[j]} in ${str}`
+        )
+        stringPassedTest = true
       }
     }
-  })
+  }
   if (stringPassedTest) {
     passedCases.push(str)
+  }
+
+  function findPattern(str) {
+    let results = []
+    for (let i = 1; i < str.length; i++) {
+      if (str[i - 1] === str[i + 1] && str[i] !== str[i - 1]) {
+        let result = str.substring(i - 1, i + 2)
+        //console.log(`found aba pattern: ${result}`)
+        results.push(result)
+      }
+    }
+    if (results) {
+      return results
+    }
   }
 })
 
@@ -43,7 +59,7 @@ function findPattern(str) {
   for (let i = 1; i < str.length; i++) {
     if (str[i - 1] === str[i + 1] && str[i] !== str[i - 1]) {
       let result = str.substring(i - 1, i + 2)
-      //console.log(`found aba pattern: ${result}`)
+      console.log(`found aba pattern: ${result}`)
       results.push(result)
     }
   }
