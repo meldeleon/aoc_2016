@@ -1,5 +1,3 @@
-const { inspect } = require("util")
-
 const input = require("fs")
   .readFileSync("day8_input.txt")
   .toString()
@@ -22,24 +20,43 @@ for (let r = 0; r < height; r++) {
   }
 }
 
+//parsing each instruction
 input.forEach((instruction) => {
-  if (instruction.startsWith(rect)){
-    
+  let splitInstruction = instruction.split(/\s/)
+  if (splitInstruction[0] === "rect") {
+    let [dimension1, dimension2] = splitInstruction[1].split("x")
+    board = rect(dimension1, dimension2, board)
   } else {
-  let split = instruction.split("/\s/")
-  let [method, ]
+    let [method, type, ref, throwaway, pixels] = splitInstruction
+    let rowOrCol = ref.match(/[^\=]*$/)[0]
+    if (type === "row") {
+      console.log(
+        `rotating row ${rowOrCol} by ${pixels} px for ${splitInstruction}`
+      )
+      board = rotateRow(rowOrCol, pixels, board)
+    } else {
+      console.log(
+        `rotating col ${rowOrCol} by ${pixels} px ${splitInstruction}`
+      )
+      board = rotateCol(rowOrCol, pixels, board)
+    }
   }
+  console.table(board)
 })
 
 //METHODS BELOW
 
 //rect, turns on a rectangle of pixels takes column, row
-function rect(column, row) {
+function rect(column, row, board) {
+  let outputBoard = board.map((x) => {
+    return [...x]
+  })
   for (let r = 0; r < row; r++) {
     for (let c = 0; c < column; c++) {
-      board[r][c] = true
+      outputBoard[r][c] = true
     }
   }
+  return outputBoard
 }
 // rotate column,  pushes a column down by x number of pixels. returns a new board.
 function rotateCol(column, pixels, board) {
