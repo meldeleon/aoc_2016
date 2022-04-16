@@ -15,16 +15,16 @@ for (let i = 0; i < height; i++) {
 //Initialize values of the board as all off.
 for (let r = 0; r < height; r++) {
   for (let c = 0; c < width; c++) {
-    board[r][c] = false
+    board[r][c] = "."
   }
 }
 
-board[0][0] = true
-board[0][2] = true
-board[1][0] = true
-board[1][1] = true
-board[1][2] = true
-board[2][1] = true
+board[0][0] = "#"
+board[0][2] = "#"
+board[1][0] = "#"
+board[1][1] = "#"
+board[1][2] = "#"
+board[2][1] = "#"
 
 console.table(board)
 
@@ -37,6 +37,9 @@ function rotateRow(row, pixels, board) {
   for (let c = 0; c < width; c++) {
     let valueToBeShifted = board[row][c]
     let destinationColumn = (c + pixels) % width
+    console.log(
+      `Shifting the value of ${row}, ${c} which is ${valueToBeShifted} to the destination of ${row}, ${destinationColumn}`
+    )
     outputBoard[row][destinationColumn] = valueToBeShifted
   }
   return outputBoard

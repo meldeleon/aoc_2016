@@ -4,8 +4,8 @@ const input = require("fs")
   .split(/\r\n/)
 console.log(input)
 
-const width = 7
-const height = 3
+const width = 50
+const height = 6
 
 //Define the board, which is row, column.
 let board = new Array(height)
@@ -16,7 +16,7 @@ for (let i = 0; i < height; i++) {
 //Initialize values of the board as all off.
 for (let r = 0; r < height; r++) {
   for (let c = 0; c < width; c++) {
-    board[r][c] = false
+    board[r][c] = "."
   }
 }
 
@@ -29,20 +29,32 @@ input.forEach((instruction) => {
   } else {
     let [method, type, ref, throwaway, pixels] = splitInstruction
     let rowOrCol = ref.match(/[^\=]*$/)[0]
+    pixels = parseInt(pixels)
     if (type === "row") {
-      console.log(
-        `rotating row ${rowOrCol} by ${pixels} px for ${splitInstruction}`
-      )
+      // console.log(
+      //   `rotating row ${rowOrCol} by ${pixels} px for ${splitInstruction}`
+      // )
       board = rotateRow(rowOrCol, pixels, board)
-    } else {
-      console.log(
-        `rotating col ${rowOrCol} by ${pixels} px ${splitInstruction}`
-      )
+    } else if (type === "column") {
+      // console.log(
+      //   `rotating col ${rowOrCol} by ${pixels} px ${splitInstruction}`
+      // )
       board = rotateCol(rowOrCol, pixels, board)
     }
   }
   console.table(board)
 })
+let onCount = 0
+
+for (let r = 0; r < height; r++) {
+  for (let c = 0; c < width; c++) {
+    if (board[r][c] === "#") {
+      onCount++
+    }
+  }
+}
+
+console.log(`Total count is ${onCount}`)
 
 //METHODS BELOW
 
@@ -53,7 +65,7 @@ function rect(column, row, board) {
   })
   for (let r = 0; r < row; r++) {
     for (let c = 0; c < column; c++) {
-      outputBoard[r][c] = true
+      outputBoard[r][c] = "#"
     }
   }
   return outputBoard
@@ -77,6 +89,9 @@ function rotateRow(row, pixels, board) {
   for (let c = 0; c < width; c++) {
     let valueToBeShifted = board[row][c]
     let destinationColumn = (c + pixels) % width
+    // console.log(
+    //   `Shifting the value of ${row}, ${c} which is ${valueToBeShifted} to the destination of ${row}, ${destinationColumn}`
+    // )
     outputBoard[row][destinationColumn] = valueToBeShifted
   }
   return outputBoard
